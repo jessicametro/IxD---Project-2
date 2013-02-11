@@ -1,4 +1,5 @@
-/*  Resources  */
+/*  RESOURCES  */
+
 //  SimpleOpenNI User Test
 //  https://github.com/acm-uiuc/FallingBlocks/blob/master/PhsyicsKinect/PhsyicsKinect.pde
 //  http://www.memo.tv/msafluid/
@@ -6,14 +7,22 @@
 
 
 
-/* variables */
+/*  IMPORTS  */
 
 import SimpleOpenNI.*;
+import msafluid.*;
+
+
+
+
+/*  VARIABLES  */
 
 SimpleOpenNI context;
 boolean autoCalib=true;
+final float FLUID_WIDTH = 120;
 
-
+MSAFluidSolver2D fluidSolver;
+PImage imgFluid;
 
 
 void setup() {
@@ -27,8 +36,6 @@ void setup() {
   context.enableUser(SimpleOpenNI.SKEL_PROFILE_ALL);
  
   size(context.depthWidth(), context.depthHeight());
-  
-  
 }
 
 
@@ -47,8 +54,7 @@ void draw() {
   {
     if(context.isTrackingSkeleton(userList[i]))
       drawSkeleton(userList[i]);
-  }  
-  
+  }   
 }
 
 
