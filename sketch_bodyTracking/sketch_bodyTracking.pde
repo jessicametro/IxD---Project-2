@@ -1,19 +1,17 @@
+/*  Resources  */
+//  SimpleOpenNI User Test
+//  https://github.com/acm-uiuc/FallingBlocks/blob/master/PhsyicsKinect/PhsyicsKinect.pde
+//  http://www.memo.tv/msafluid/
+
+
+
+
 /* variables */
 
 import SimpleOpenNI.*;
 
 SimpleOpenNI context;
 boolean autoCalib=true;
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -32,6 +30,9 @@ void setup() {
   
   
 }
+
+
+
 
 void draw() {
  // update the cam
@@ -64,6 +65,7 @@ void drawSkeleton(int userId) {
   
   // from https://github.com/acm-uiuc/FallingBlocks/blob/master/PhsyicsKinect/PhsyicsKinect.pde
   
+  // LEFT HAND 
   PVector jointPosLeftHand = new PVector();  // 3D point
   PVector screenPosLeftHand = new PVector();  // 2D point
   context.getJointPositionSkeleton(userId, SimpleOpenNI.SKEL_LEFT_HAND, jointPosLeftHand);
@@ -73,6 +75,15 @@ void drawSkeleton(int userId) {
   noStroke();
   ellipse(screenPosLeftHand.x, screenPosLeftHand.y, jointPosLeftHand.z/100.0, jointPosLeftHand.z/100.0);
 
+  // RIGHT HAND 
+  PVector jointPosRightHand = new PVector();  // 3D point
+  PVector screenPosRightHand = new PVector();  // 2D point
+  context.getJointPositionSkeleton(userId, SimpleOpenNI.SKEL_RIGHT_HAND, jointPosRightHand);
+  context.convertRealWorldToProjective(jointPosRightHand, screenPosRightHand);
+  //println(jointPos);
+  fill(0, 255, 0, 100);
+  noStroke();
+  ellipse(screenPosRightHand.x, screenPosRightHand.y, jointPosRightHand.z/100.0, jointPosRightHand.z/100.0);
   
 }
 
