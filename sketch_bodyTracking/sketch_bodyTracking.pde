@@ -181,6 +181,46 @@ void drawSkeleton(int userId) {
   noStroke();
   ellipse(screenPosRightHip.x, screenPosRightHip.y, jointPosRightHip.z/100.0, jointPosRightHip.z/100.0);
   
+  // LEFT KNEE 
+  PVector jointPosLeftKnee = new PVector();  // 3D point
+  PVector screenPosLeftKnee = new PVector();  // 2D point
+  context.getJointPositionSkeleton(userId, SimpleOpenNI.SKEL_LEFT_KNEE, jointPosLeftKnee);
+  context.convertRealWorldToProjective(jointPosLeftKnee, screenPosLeftKnee);
+  //println(jointPos);
+  fill(255, 255, 255, 100);
+  noStroke();
+  ellipse(screenPosLeftKnee.x, screenPosLeftKnee.y, jointPosLeftKnee.z/100.0, jointPosLeftKnee.z/100.0);
+  
+  // RIGHT KNEE 
+  PVector jointPosRightKnee = new PVector();  // 3D point
+  PVector screenPosRightKnee = new PVector();  // 2D point
+  context.getJointPositionSkeleton(userId, SimpleOpenNI.SKEL_RIGHT_KNEE, jointPosRightKnee);
+  context.convertRealWorldToProjective(jointPosRightKnee, screenPosRightKnee);
+  //println(jointPos);
+  fill(255, 255, 255, 100);
+  noStroke();
+  ellipse(screenPosRightKnee.x, screenPosRightKnee.y, jointPosRightKnee.z/100.0, jointPosRightKnee.z/100.0);
+  
+  // LEFT FOOT 
+  PVector jointPosLeftFoot = new PVector();  // 3D point
+  PVector screenPosLeftFoot = new PVector();  // 2D point
+  context.getJointPositionSkeleton(userId, SimpleOpenNI.SKEL_LEFT_FOOT, jointPosLeftFoot);
+  context.convertRealWorldToProjective(jointPosLeftFoot, screenPosLeftFoot);
+  //println(jointPos);
+  fill(255, 255, 255, 100);
+  noStroke();
+  ellipse(screenPosLeftFoot.x, screenPosLeftFoot.y, jointPosLeftFoot.z/100.0, jointPosLeftFoot.z/100.0);
+  
+  // RIGHT FOOT 
+  PVector jointPosRightFoot = new PVector();  // 3D point
+  PVector screenPosRightFoot = new PVector();  // 2D point
+  context.getJointPositionSkeleton(userId, SimpleOpenNI.SKEL_RIGHT_FOOT, jointPosRightFoot);
+  context.convertRealWorldToProjective(jointPosRightFoot, screenPosRightFoot);
+  //println(jointPos);
+  fill(255, 255, 255, 100);
+  noStroke();
+  ellipse(screenPosRightFoot.x, screenPosRightFoot.y, jointPosRightFoot.z/100.0, jointPosRightFoot.z/100.0);
+  
 }
 
 
