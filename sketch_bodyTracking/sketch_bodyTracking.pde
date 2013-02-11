@@ -125,6 +125,26 @@ void drawSkeleton(int userId) {
   noStroke();
   ellipse(screenPosRightShoulder.x, screenPosRightShoulder.y, jointPosRightShoulder.z/100.0, jointPosRightShoulder.z/100.0);
   
+  // LEFT ELBOW 
+  PVector jointPosLeftElbow = new PVector();  // 3D point
+  PVector screenPosLeftElbow = new PVector();  // 2D point
+  context.getJointPositionSkeleton(userId, SimpleOpenNI.SKEL_LEFT_ELBOW, jointPosLeftElbow);
+  context.convertRealWorldToProjective(jointPosLeftElbow, screenPosLeftElbow);
+  //println(jointPos);
+  fill(255, 255, 255, 100);
+  noStroke();
+  ellipse(screenPosLeftElbow.x, screenPosLeftElbow.y, jointPosLeftElbow.z/100.0, jointPosLeftElbow.z/100.0);
+  
+  // RIGHT ELBOW 
+  PVector jointPosRightElbow = new PVector();  // 3D point
+  PVector screenPosRightElbow = new PVector();  // 2D point
+  context.getJointPositionSkeleton(userId, SimpleOpenNI.SKEL_RIGHT_ELBOW, jointPosRightElbow);
+  context.convertRealWorldToProjective(jointPosRightElbow, screenPosRightElbow);
+  //println(jointPos);
+  fill(255, 255, 255, 100);
+  noStroke();
+  ellipse(screenPosRightElbow.x, screenPosRightElbow.y, jointPosRightElbow.z/100.0, jointPosRightElbow.z/100.0);
+  
 }
 
 
