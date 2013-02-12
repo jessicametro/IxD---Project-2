@@ -76,7 +76,13 @@ void draw() {
 }
 
 
+
+
 PVector lastScreenPosLeftHand = new PVector();  // remember the last point // 2D point
+PVector lastScreenPosRightHand = new PVector();  // remember the last point // 2D point
+
+
+
 
 // draw the skeleton with the selected joints
 void drawSkeleton(int userId) {
@@ -111,6 +117,9 @@ void drawSkeleton(int userId) {
   fill(0, 255, 0, 100);
   noStroke();
   ellipse(screenPosRightHand.x, screenPosRightHand.y, jointPosRightHand.z/100.0, jointPosRightHand.z/100.0);
+ 
+  addForce(screenPosRightHand.x, screenPosRightHand.y, screenPosRightHand.x-lastScreenPosRightHand.x, screenPosRightHand.y-lastScreenPosRightHand.y);
+  lastScreenPosRightHand = screenPosRightHand; // saving current value for next time (to remember the last point)
  
   // HEAD
   PVector jointPosHead = new PVector();  // 3D point
