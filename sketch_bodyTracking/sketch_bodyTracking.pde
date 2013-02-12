@@ -36,18 +36,36 @@ void setup() {
   context.enableUser(SimpleOpenNI.SKEL_PROFILE_ALL);
  
   size(context.depthWidth(), context.depthHeight());
+  
+  // create fluid and set options
+  fluidSolver = new MSAFluidSolver2D((int)(FLUID_WIDTH), (int)(FLUID_WIDTH * height/width));
+    fluidSolver.enableRGB(true).setFadeSpeed(0.003).setDeltaT(0.5).setVisc(0.0001);
+
+  // create image to hold fluid picture
+  imgFluid = createImage(fluidSolver.getWidth(), fluidSolver.getHeight(), RGB);
 }
 
 
 
 
 void draw() {
- // update the cam
+  // update the cam
   context.update();
+  
+  // update the fluid simulation
+  fluidSolver.update();
   
   // draw depthImageMap
   image(context.depthImage(),0,0);
   
+   // draw the fluid
+   for(int i=0; i<fluidSolver.getNumCells(); i++) {
+       int d = 2;
+       imgFluid.pixels[i] = color(fluidSolver.r[i] * d, fluidSolver.g[i] * d, fluidSolver.b[i] * d);
+   }  
+   imgFluid.updatePixels();//  fastblur(imgFluid, 2);
+   image(imgFluid, 0, 0, width, height);
+
   // draw the skeleton if it's available
   int[] userList = context.getUsers();
   for(int i=0;i<userList.length;i++)
@@ -221,6 +239,43 @@ void drawSkeleton(int userId) {
   noStroke();
   ellipse(screenPosRightFoot.x, screenPosRightFoot.y, jointPosRightFoot.z/100.0, jointPosRightFoot.z/100.0);
   
+}
+
+
+
+
+// add force and dye to fluid, and create particles
+// x & y are position, where 0 is the left & top, and 1 is the right & bottom.
+// d = derivative of the position
+// dx & dy = velocity
+void addForce(float x, float y, float dx, float dy) {
+    float speed = dx * dx  + dy * dy * float(height)/float(width);    // balance the x and y components of speed with the screen aspect ratio
+
+    if(speed > 0) {
+        if(x<0) x = 0; 
+        else if(x>1) x = 1;
+        if(y<0) y = 0; 
+        else if(y>1) y = 1;
+
+        float colorMult = 5;
+        float velocityMult = 30.0f;
+
+        int index = fluidSolver.getIndexForNormalizedPosition(x, y);
+
+        color drawColor;
+
+        colorMode(HSB, 360, 1, 1);
+        float hue = ((x + y) * 180 + frameCount) % 360;
+        drawColor = color(hue, 1, 1);
+        colorMode(RGB, 1);  
+
+        fluidSolver.rOld[index]  += red(drawColor) * colorMult;
+        fluidSolver.gOld[index]  += green(drawColor) * colorMult;
+        fluidSolver.bOld[index]  += blue(drawColor) * colorMult;
+
+        fluidSolver.uOld[index] += dx * velocityMult;
+        fluidSolver.vOld[index] += dy * velocityMult;
+    }
 }
 
 
