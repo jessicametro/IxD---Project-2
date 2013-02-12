@@ -77,9 +77,11 @@ void draw() {
 
 
 
-
-PVector lastScreenPosLeftHand = new PVector();  // remember the last point // 2D point
-PVector lastScreenPosRightHand = new PVector();  // remember the last point // 2D point
+// remember the last 2D point
+PVector lastScreenPosLeftHand = new PVector(); 
+PVector lastScreenPosRightHand = new PVector(); 
+PVector lastScreenPosHead = new PVector();
+PVector lastScreenPosNeck = new PVector();
 
 
 
@@ -131,6 +133,9 @@ void drawSkeleton(int userId) {
   noStroke();
   ellipse(screenPosHead.x, screenPosHead.y, jointPosHead.z/100.0, jointPosHead.z/100.0);
   
+  addForce(screenPosHead.x, screenPosHead.y, screenPosHead.x-lastScreenPosHead.x, screenPosHead.y-lastScreenPosHead.y);
+  lastScreenPosHead = screenPosHead; // saving current value for next time (to remember the last point)
+  
   // NECK (more like chest)
   PVector jointPosNeck = new PVector();  // 3D point
   PVector screenPosNeck = new PVector();  // 2D point
@@ -140,6 +145,9 @@ void drawSkeleton(int userId) {
   fill(0, 0, 255, 100);
   noStroke();
   ellipse(screenPosNeck.x, screenPosNeck.y, jointPosNeck.z/100.0, jointPosNeck.z/100.0);
+  
+  addForce(screenPosNeck.x, screenPosNeck.y, screenPosNeck.x-lastScreenPosNeck.x, screenPosNeck.y-lastScreenPosNeck.y);
+  lastScreenPosNeck = screenPosNeck; // saving current value for next time (to remember the last point)
   
   // LEFT SHOULDER 
   PVector jointPosLeftShoulder = new PVector();  // 3D point
