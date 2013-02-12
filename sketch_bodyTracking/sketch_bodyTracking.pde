@@ -107,7 +107,7 @@ void drawSkeleton(int userId) {
   noStroke();
   ellipse(screenPosLeftHand.x, screenPosLeftHand.y, jointPosLeftHand.z/100.0, jointPosLeftHand.z/100.0);
   
-  addForce(screenPosLeftHand.x, screenPosLeftHand.y, screenPosLeftHand.x-lastScreenPosLeftHand.x, screenPosLeftHand.y-lastScreenPosLeftHand.y);
+  addForce(screenPosLeftHand.x, screenPosLeftHand.y, screenPosLeftHand.x-lastScreenPosLeftHand.x, screenPosLeftHand.y-lastScreenPosLeftHand.y, 0);
   lastScreenPosLeftHand = screenPosLeftHand; // saving current value for next time (to remember the last point)
 
   // RIGHT HAND 
@@ -120,7 +120,7 @@ void drawSkeleton(int userId) {
   noStroke();
   ellipse(screenPosRightHand.x, screenPosRightHand.y, jointPosRightHand.z/100.0, jointPosRightHand.z/100.0);
  
-  addForce(screenPosRightHand.x, screenPosRightHand.y, screenPosRightHand.x-lastScreenPosRightHand.x, screenPosRightHand.y-lastScreenPosRightHand.y);
+  addForce(screenPosRightHand.x, screenPosRightHand.y, screenPosRightHand.x-lastScreenPosRightHand.x, screenPosRightHand.y-lastScreenPosRightHand.y, 90);
   lastScreenPosRightHand = screenPosRightHand; // saving current value for next time (to remember the last point)
  
   // HEAD
@@ -133,7 +133,7 @@ void drawSkeleton(int userId) {
   noStroke();
   ellipse(screenPosHead.x, screenPosHead.y, jointPosHead.z/100.0, jointPosHead.z/100.0);
   
-  addForce(screenPosHead.x, screenPosHead.y, screenPosHead.x-lastScreenPosHead.x, screenPosHead.y-lastScreenPosHead.y);
+  addForce(screenPosHead.x, screenPosHead.y, screenPosHead.x-lastScreenPosHead.x, screenPosHead.y-lastScreenPosHead.y, 180);
   lastScreenPosHead = screenPosHead; // saving current value for next time (to remember the last point)
   
   // NECK (more like chest)
@@ -146,7 +146,7 @@ void drawSkeleton(int userId) {
   noStroke();
   ellipse(screenPosNeck.x, screenPosNeck.y, jointPosNeck.z/100.0, jointPosNeck.z/100.0);
   
-  addForce(screenPosNeck.x, screenPosNeck.y, screenPosNeck.x-lastScreenPosNeck.x, screenPosNeck.y-lastScreenPosNeck.y);
+  addForce(screenPosNeck.x, screenPosNeck.y, screenPosNeck.x-lastScreenPosNeck.x, screenPosNeck.y-lastScreenPosNeck.y, 270);
   lastScreenPosNeck = screenPosNeck; // saving current value for next time (to remember the last point)
   
   // LEFT SHOULDER 
@@ -268,11 +268,11 @@ void drawSkeleton(int userId) {
 // x & y are position
 // d = derivative of the position
 // dx & dy = velocity
-void addForce(float x, float y, float dx, float dy) {
-  addForceAbs(x/float(width), y/float(height), dx/float(width), dy/float(height));
+void addForce(float x, float y, float dx, float dy, float hue) {
+  addForceAbs(x/float(width), y/float(height), dx/float(width), dy/float(height), hue);
 }
 
-void addForceAbs(float x, float y, float dx, float dy) {
+void addForceAbs(float x, float y, float dx, float dy, float hue) {
     float speed = dx * dx  + dy * dy * float(height)/float(width);    // balance the x and y components of speed with the screen aspect ratio
 
     if(speed > 0) {
@@ -289,7 +289,8 @@ void addForceAbs(float x, float y, float dx, float dy) {
         color drawColor;
 
         colorMode(HSB, 360, 1, 1);
-        float hue = ((x + y) * 180 + frameCount) % 360;
+        hue = (hue + frameCount/30) % 360;
+        //float hue = ((x + y) * 180 + frameCount) % 360;
         drawColor = color(hue, 1, 1);
         colorMode(RGB, 1);  
 
