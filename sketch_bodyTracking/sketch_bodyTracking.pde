@@ -76,7 +76,7 @@ void draw() {
 }
 
 
-
+PVector lastScreenPosLeftHand = new PVector();  // remember the last point // 2D point
 
 // draw the skeleton with the selected joints
 void drawSkeleton(int userId) {
@@ -98,6 +98,9 @@ void drawSkeleton(int userId) {
   fill(255, 0, 0, 100);
   noStroke();
   ellipse(screenPosLeftHand.x, screenPosLeftHand.y, jointPosLeftHand.z/100.0, jointPosLeftHand.z/100.0);
+  
+  addForce(screenPosLeftHand.x, screenPosLeftHand.y, screenPosLeftHand.x-lastScreenPosLeftHand.x, screenPosLeftHand.y-lastScreenPosLeftHand.y);
+  lastScreenPosLeftHand = screenPosLeftHand; // saving current value for next time (to remember the last point)
 
   // RIGHT HAND 
   PVector jointPosRightHand = new PVector();  // 3D point
@@ -245,10 +248,14 @@ void drawSkeleton(int userId) {
 
 
 // add force and dye to fluid, and create particles
-// x & y are position, where 0 is the left & top, and 1 is the right & bottom.
+// x & y are position
 // d = derivative of the position
 // dx & dy = velocity
 void addForce(float x, float y, float dx, float dy) {
+  addForceAbs(x/float(width), y/float(height), dx/float(width), dy/float(height));
+}
+
+void addForceAbs(float x, float y, float dx, float dy) {
     float speed = dx * dx  + dy * dy * float(height)/float(width);    // balance the x and y components of speed with the screen aspect ratio
 
     if(speed > 0) {
