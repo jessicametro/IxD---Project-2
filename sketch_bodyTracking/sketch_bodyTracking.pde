@@ -24,6 +24,9 @@ final float FLUID_WIDTH = 120;
 MSAFluidSolver2D fluidSolver;
 PImage imgFluid;
 
+float bodyAlpha = 0; // originally 100
+
+
 
 void setup() {
   context = new SimpleOpenNI(this);
@@ -103,7 +106,7 @@ void drawSkeleton(int userId) {
   context.getJointPositionSkeleton(userId, SimpleOpenNI.SKEL_LEFT_HAND, jointPosLeftHand);
   context.convertRealWorldToProjective(jointPosLeftHand, screenPosLeftHand);
   //println(jointPos);
-  fill(255, 0, 0, 100);
+  fill(255, 0, 0, bodyAlpha);
   noStroke();
   ellipse(screenPosLeftHand.x, screenPosLeftHand.y, jointPosLeftHand.z/100.0, jointPosLeftHand.z/100.0);
   
@@ -116,7 +119,7 @@ void drawSkeleton(int userId) {
   context.getJointPositionSkeleton(userId, SimpleOpenNI.SKEL_RIGHT_HAND, jointPosRightHand);
   context.convertRealWorldToProjective(jointPosRightHand, screenPosRightHand);
   //println(jointPos);
-  fill(0, 255, 0, 100);
+  fill(0, 255, 0, bodyAlpha);
   noStroke();
   ellipse(screenPosRightHand.x, screenPosRightHand.y, jointPosRightHand.z/100.0, jointPosRightHand.z/100.0);
  
@@ -129,7 +132,7 @@ void drawSkeleton(int userId) {
   context.getJointPositionSkeleton(userId, SimpleOpenNI.SKEL_HEAD, jointPosHead);
   context.convertRealWorldToProjective(jointPosHead, screenPosHead);
   //println(jointPos);
-  fill(255, 255, 255, 100);
+  fill(255, 255, 255, bodyAlpha);
   noStroke();
   ellipse(screenPosHead.x, screenPosHead.y, jointPosHead.z/100.0, jointPosHead.z/100.0);
   
@@ -142,7 +145,7 @@ void drawSkeleton(int userId) {
   context.getJointPositionSkeleton(userId, SimpleOpenNI.SKEL_NECK, jointPosNeck);
   context.convertRealWorldToProjective(jointPosNeck, screenPosNeck);
   //println(jointPos);
-  fill(0, 0, 255, 100);
+  fill(0, 0, 255, bodyAlpha);
   noStroke();
   ellipse(screenPosNeck.x, screenPosNeck.y, jointPosNeck.z/100.0, jointPosNeck.z/100.0);
   
@@ -155,7 +158,7 @@ void drawSkeleton(int userId) {
   context.getJointPositionSkeleton(userId, SimpleOpenNI.SKEL_LEFT_SHOULDER, jointPosLeftShoulder);
   context.convertRealWorldToProjective(jointPosLeftShoulder, screenPosLeftShoulder);
   //println(jointPos);
-  fill(255, 0, 255, 100);
+  fill(255, 0, 255, bodyAlpha);
   noStroke();
   ellipse(screenPosLeftShoulder.x, screenPosLeftShoulder.y, jointPosLeftShoulder.z/100.0, jointPosLeftShoulder.z/100.0);
   
@@ -165,7 +168,7 @@ void drawSkeleton(int userId) {
   context.getJointPositionSkeleton(userId, SimpleOpenNI.SKEL_RIGHT_SHOULDER, jointPosRightShoulder);
   context.convertRealWorldToProjective(jointPosRightShoulder, screenPosRightShoulder);
   //println(jointPos);
-  fill(0, 255, 255, 100);
+  fill(0, 255, 255, bodyAlpha);
   noStroke();
   ellipse(screenPosRightShoulder.x, screenPosRightShoulder.y, jointPosRightShoulder.z/100.0, jointPosRightShoulder.z/100.0);
   
@@ -175,7 +178,7 @@ void drawSkeleton(int userId) {
   context.getJointPositionSkeleton(userId, SimpleOpenNI.SKEL_LEFT_ELBOW, jointPosLeftElbow);
   context.convertRealWorldToProjective(jointPosLeftElbow, screenPosLeftElbow);
   //println(jointPos);
-  fill(255, 255, 255, 100);
+  fill(255, 255, 255, bodyAlpha);
   noStroke();
   ellipse(screenPosLeftElbow.x, screenPosLeftElbow.y, jointPosLeftElbow.z/100.0, jointPosLeftElbow.z/100.0);
   
@@ -185,7 +188,7 @@ void drawSkeleton(int userId) {
   context.getJointPositionSkeleton(userId, SimpleOpenNI.SKEL_RIGHT_ELBOW, jointPosRightElbow);
   context.convertRealWorldToProjective(jointPosRightElbow, screenPosRightElbow);
   //println(jointPos);
-  fill(255, 255, 255, 100);
+  fill(255, 255, 255, bodyAlpha);
   noStroke();
   ellipse(screenPosRightElbow.x, screenPosRightElbow.y, jointPosRightElbow.z/100.0, jointPosRightElbow.z/100.0);
   
@@ -195,7 +198,7 @@ void drawSkeleton(int userId) {
   context.getJointPositionSkeleton(userId, SimpleOpenNI.SKEL_TORSO, jointPosTorso);
   context.convertRealWorldToProjective(jointPosTorso, screenPosTorso);
   //println(jointPos);
-  fill(255, 255, 255, 100);
+  fill(255, 255, 255, bodyAlpha);
   noStroke();
   ellipse(screenPosTorso.x, screenPosTorso.y, jointPosTorso.z/100.0, jointPosTorso.z/100.0);
   
@@ -205,7 +208,7 @@ void drawSkeleton(int userId) {
   context.getJointPositionSkeleton(userId, SimpleOpenNI.SKEL_LEFT_HIP, jointPosLeftHip);
   context.convertRealWorldToProjective(jointPosLeftHip, screenPosLeftHip);
   //println(jointPos);
-  fill(255, 255, 255, 100);
+  fill(255, 255, 255, bodyAlpha);
   noStroke();
   ellipse(screenPosLeftHip.x, screenPosLeftHip.y, jointPosLeftHip.z/100.0, jointPosLeftHip.z/100.0);
   
@@ -215,7 +218,7 @@ void drawSkeleton(int userId) {
   context.getJointPositionSkeleton(userId, SimpleOpenNI.SKEL_RIGHT_HIP, jointPosRightHip);
   context.convertRealWorldToProjective(jointPosRightHip, screenPosRightHip);
   //println(jointPos);
-  fill(255, 255, 255, 100);
+  fill(255, 255, 255, bodyAlpha);
   noStroke();
   ellipse(screenPosRightHip.x, screenPosRightHip.y, jointPosRightHip.z/100.0, jointPosRightHip.z/100.0);
   
@@ -225,7 +228,7 @@ void drawSkeleton(int userId) {
   context.getJointPositionSkeleton(userId, SimpleOpenNI.SKEL_LEFT_KNEE, jointPosLeftKnee);
   context.convertRealWorldToProjective(jointPosLeftKnee, screenPosLeftKnee);
   //println(jointPos);
-  fill(255, 255, 255, 100);
+  fill(255, 255, 255, bodyAlpha);
   noStroke();
   ellipse(screenPosLeftKnee.x, screenPosLeftKnee.y, jointPosLeftKnee.z/100.0, jointPosLeftKnee.z/100.0);
   
@@ -235,7 +238,7 @@ void drawSkeleton(int userId) {
   context.getJointPositionSkeleton(userId, SimpleOpenNI.SKEL_RIGHT_KNEE, jointPosRightKnee);
   context.convertRealWorldToProjective(jointPosRightKnee, screenPosRightKnee);
   //println(jointPos);
-  fill(255, 255, 255, 100);
+  fill(255, 255, 255, bodyAlpha);
   noStroke();
   ellipse(screenPosRightKnee.x, screenPosRightKnee.y, jointPosRightKnee.z/100.0, jointPosRightKnee.z/100.0);
   
@@ -245,7 +248,7 @@ void drawSkeleton(int userId) {
   context.getJointPositionSkeleton(userId, SimpleOpenNI.SKEL_LEFT_FOOT, jointPosLeftFoot);
   context.convertRealWorldToProjective(jointPosLeftFoot, screenPosLeftFoot);
   //println(jointPos);
-  fill(255, 255, 255, 100);
+  fill(255, 255, 255, bodyAlpha);
   noStroke();
   ellipse(screenPosLeftFoot.x, screenPosLeftFoot.y, jointPosLeftFoot.z/100.0, jointPosLeftFoot.z/100.0);
   
@@ -255,7 +258,7 @@ void drawSkeleton(int userId) {
   context.getJointPositionSkeleton(userId, SimpleOpenNI.SKEL_RIGHT_FOOT, jointPosRightFoot);
   context.convertRealWorldToProjective(jointPosRightFoot, screenPosRightFoot);
   //println(jointPos);
-  fill(255, 255, 255, 100);
+  fill(255, 255, 255, bodyAlpha);
   noStroke();
   ellipse(screenPosRightFoot.x, screenPosRightFoot.y, jointPosRightFoot.z/100.0, jointPosRightFoot.z/100.0);
   
