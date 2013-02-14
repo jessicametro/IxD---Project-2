@@ -19,16 +19,21 @@ import msafluid.*;
 
 SimpleOpenNI context;
 boolean autoCalib=true;
-final float FLUID_WIDTH = 120;
+final float FLUID_WIDTH = 240;
 
 MSAFluidSolver2D fluidSolver;
 PImage imgFluid;
 
 float bodyAlpha = 0; // originally 100
 
+float velScale = 0.0001;
+
 
 
 void setup() {
+  //size(context.depthWidth(), context.depthHeight());
+  size(displayWidth, displayHeight, OPENGL);
+  
   context = new SimpleOpenNI(this);
   
   // enable depthMap generation 
@@ -38,7 +43,6 @@ void setup() {
   // enable skeleton generation for all joints
   context.enableUser(SimpleOpenNI.SKEL_PROFILE_ALL);
  
-  size(context.depthWidth(), context.depthHeight());
   
   // create fluid and set options
   fluidSolver = new MSAFluidSolver2D((int)(FLUID_WIDTH), (int)(FLUID_WIDTH * height/width));
@@ -59,7 +63,7 @@ void draw() {
   fluidSolver.update();
   
   // draw depthImageMap
-  image(context.depthImage(),0,0);
+  //image(context.depthImage(),0,0);
   
    // draw the fluid
    for(int i=0; i<fluidSolver.getNumCells(); i++) {
@@ -151,6 +155,7 @@ void drawSkeleton(int userId) {
   addForce(screenPosHead.x, screenPosHead.y, screenPosHead.x-lastScreenPosHead.x, screenPosHead.y-lastScreenPosHead.y, 48);
   lastScreenPosHead = screenPosHead; // saving current value for next time (to remember the last point)
   
+  /*
   // NECK (more like chest)
   PVector jointPosNeck = new PVector();  // 3D point
   PVector screenPosNeck = new PVector();  // 2D point
@@ -161,8 +166,9 @@ void drawSkeleton(int userId) {
   noStroke();
   ellipse(screenPosNeck.x, screenPosNeck.y, jointPosNeck.z/100.0, jointPosNeck.z/100.0);
   
-  addForce(screenPosNeck.x, screenPosNeck.y, screenPosNeck.x-lastScreenPosNeck.x, screenPosNeck.y-lastScreenPosNeck.y, 72);
+  addForce(screenPosNeck.x, screenPosNeck.y, (screenPosNeck.x-lastScreenPosNeck.x)*velScale, (screenPosNeck.y-lastScreenPosNeck.y)*velScale, 72);
   lastScreenPosNeck = screenPosNeck; // saving current value for next time (to remember the last point)
+  */
   
   // LEFT SHOULDER 
   PVector jointPosLeftShoulder = new PVector();  // 3D point
