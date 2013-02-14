@@ -113,17 +113,57 @@ PVector lastScreenPosRightFoot = new PVector();
 
 
 
+// arrays
+
+
+PVector[] lastScreenPos = new PVector[2];
+
+int[] jointColor = {
+  0,
+  124,
+};
+
+
 // draw the skeleton with the selected joints
 void drawSkeleton(int userId) {
+
   // to get the 3d joint data
-  /*
-  PVector jointPos = new PVector();
-  context.getJointPositionSkeleton(userId,SimpleOpenNI.SKEL_NECK,jointPos);
-  println(jointPos);
-  */
-  
   // from https://github.com/acm-uiuc/FallingBlocks/blob/master/PhsyicsKinect/PhsyicsKinect.pde
   
+  int[] jointID = {
+    SimpleOpenNI.SKEL_LEFT_HAND, 
+    SimpleOpenNI.SKEL_RIGHT_HAND,
+  };
+
+  for (int i=0; i<jointID.length; i++) {
+    // LEFT HAND 
+    PVector jointPos = new PVector();  // 3D point
+    PVector screenPos = new PVector();  // 2D point
+    context.getJointPositionSkeleton(userId, jointID[i], jointPos);
+    context.convertRealWorldToProjective(jointPos, screenPos);
+    //println(jointPos);
+    fill(255, 0, 0, bodyAlpha);
+    noStroke();
+    ellipse(screenPos.x, screenPos.y, jointPos.z/100.0, jointPos.z/100.0);
+
+    if (lastScreenPos[i] == null) {    // if there's nothing in there   
+      lastScreenPos[i] = screenPos;    // use the initial position
+    }
+    
+    addForce(screenPos.x, screenPos.y, screenPos.x-lastScreenPos[i].x, screenPos.y-lastScreenPos[i].y, jointColor[i]);
+    lastScreenPos[i] = screenPos; // saving current value for next time (to remember the last point)
+  }
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+ /* 
   // LEFT HAND 
   PVector jointPosLeftHand = new PVector();  // 3D point
   PVector screenPosLeftHand = new PVector();  // 2D point
@@ -163,7 +203,7 @@ void drawSkeleton(int userId) {
   addForce(screenPosHead.x, screenPosHead.y, screenPosHead.x-lastScreenPosHead.x, screenPosHead.y-lastScreenPosHead.y, 48);
   lastScreenPosHead = screenPosHead; // saving current value for next time (to remember the last point)
   
-  /*
+  
   // NECK (more like chest)
   PVector jointPosNeck = new PVector();  // 3D point
   PVector screenPosNeck = new PVector();  // 2D point
@@ -176,7 +216,7 @@ void drawSkeleton(int userId) {
   
   addForce(screenPosNeck.x, screenPosNeck.y, (screenPosNeck.x-lastScreenPosNeck.x)*velScale, (screenPosNeck.y-lastScreenPosNeck.y)*velScale, 72);
   lastScreenPosNeck = screenPosNeck; // saving current value for next time (to remember the last point)
-  */
+ 
   
   // LEFT SHOULDER 
   PVector jointPosLeftShoulder = new PVector();  // 3D point
@@ -321,6 +361,7 @@ void drawSkeleton(int userId) {
   addForce(screenPosRightFoot.x, screenPosRightFoot.y, screenPosRightFoot.x-lastScreenPosRightFoot.x, screenPosRightFoot.y-lastScreenPosRightFoot.y, 216);
   lastScreenPosRightFoot = screenPosRightFoot; // saving current value for next time (to remember the last point)
   
+  */
 }
 
 
