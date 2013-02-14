@@ -80,11 +80,23 @@ void draw() {
 
 
 
+
 // remember the last 2D point
 PVector lastScreenPosLeftHand = new PVector(); 
 PVector lastScreenPosRightHand = new PVector(); 
 PVector lastScreenPosHead = new PVector();
 PVector lastScreenPosNeck = new PVector();
+PVector lastScreenPosLeftShoulder = new PVector();
+PVector lastScreenPosRightShoulder = new PVector();
+PVector lastScreenPosLeftElbow = new PVector();
+PVector lastScreenPosRightElbow = new PVector();
+PVector lastScreenPosTorso = new PVector();
+PVector lastScreenPosLeftHip = new PVector();
+PVector lastScreenPosRightHip = new PVector();
+PVector lastScreenPosLeftKnee = new PVector();
+PVector lastScreenPosRightKnee = new PVector();
+PVector lastScreenPosLeftFoot = new PVector();
+PVector lastScreenPosRightFoot = new PVector();
 
 
 
@@ -123,7 +135,7 @@ void drawSkeleton(int userId) {
   noStroke();
   ellipse(screenPosRightHand.x, screenPosRightHand.y, jointPosRightHand.z/100.0, jointPosRightHand.z/100.0);
  
-  addForce(screenPosRightHand.x, screenPosRightHand.y, screenPosRightHand.x-lastScreenPosRightHand.x, screenPosRightHand.y-lastScreenPosRightHand.y, 90);
+  addForce(screenPosRightHand.x, screenPosRightHand.y, screenPosRightHand.x-lastScreenPosRightHand.x, screenPosRightHand.y-lastScreenPosRightHand.y, 24);
   lastScreenPosRightHand = screenPosRightHand; // saving current value for next time (to remember the last point)
  
   // HEAD
@@ -136,7 +148,7 @@ void drawSkeleton(int userId) {
   noStroke();
   ellipse(screenPosHead.x, screenPosHead.y, jointPosHead.z/100.0, jointPosHead.z/100.0);
   
-  addForce(screenPosHead.x, screenPosHead.y, screenPosHead.x-lastScreenPosHead.x, screenPosHead.y-lastScreenPosHead.y, 180);
+  addForce(screenPosHead.x, screenPosHead.y, screenPosHead.x-lastScreenPosHead.x, screenPosHead.y-lastScreenPosHead.y, 48);
   lastScreenPosHead = screenPosHead; // saving current value for next time (to remember the last point)
   
   // NECK (more like chest)
@@ -149,7 +161,7 @@ void drawSkeleton(int userId) {
   noStroke();
   ellipse(screenPosNeck.x, screenPosNeck.y, jointPosNeck.z/100.0, jointPosNeck.z/100.0);
   
-  addForce(screenPosNeck.x, screenPosNeck.y, screenPosNeck.x-lastScreenPosNeck.x, screenPosNeck.y-lastScreenPosNeck.y, 270);
+  addForce(screenPosNeck.x, screenPosNeck.y, screenPosNeck.x-lastScreenPosNeck.x, screenPosNeck.y-lastScreenPosNeck.y, 72);
   lastScreenPosNeck = screenPosNeck; // saving current value for next time (to remember the last point)
   
   // LEFT SHOULDER 
@@ -162,6 +174,9 @@ void drawSkeleton(int userId) {
   noStroke();
   ellipse(screenPosLeftShoulder.x, screenPosLeftShoulder.y, jointPosLeftShoulder.z/100.0, jointPosLeftShoulder.z/100.0);
   
+  addForce(screenPosLeftShoulder.x, screenPosLeftShoulder.y, screenPosLeftShoulder.x-lastScreenPosLeftShoulder.x, screenPosLeftShoulder.y-lastScreenPosLeftShoulder.y, 336);
+  lastScreenPosLeftShoulder = screenPosLeftShoulder; // saving current value for next time (to remember the last point)
+  
   // RIGHT SHOULDER 
   PVector jointPosRightShoulder = new PVector();  // 3D point
   PVector screenPosRightShoulder = new PVector();  // 2D point
@@ -171,6 +186,9 @@ void drawSkeleton(int userId) {
   fill(0, 255, 255, bodyAlpha);
   noStroke();
   ellipse(screenPosRightShoulder.x, screenPosRightShoulder.y, jointPosRightShoulder.z/100.0, jointPosRightShoulder.z/100.0);
+  
+  addForce(screenPosRightShoulder.x, screenPosRightShoulder.y, screenPosRightShoulder.x-lastScreenPosRightShoulder.x, screenPosRightShoulder.y-lastScreenPosRightShoulder.y, 312);
+  lastScreenPosRightShoulder = screenPosRightShoulder; // saving current value for next time (to remember the last point)
   
   // LEFT ELBOW 
   PVector jointPosLeftElbow = new PVector();  // 3D point
@@ -182,6 +200,9 @@ void drawSkeleton(int userId) {
   noStroke();
   ellipse(screenPosLeftElbow.x, screenPosLeftElbow.y, jointPosLeftElbow.z/100.0, jointPosLeftElbow.z/100.0);
   
+  addForce(screenPosLeftElbow.x, screenPosLeftElbow.y, screenPosLeftElbow.x-lastScreenPosLeftElbow.x, screenPosLeftElbow.y-lastScreenPosLeftElbow.y, 288);
+  lastScreenPosLeftElbow = screenPosLeftElbow; // saving current value for next time (to remember the last point)
+  
   // RIGHT ELBOW 
   PVector jointPosRightElbow = new PVector();  // 3D point
   PVector screenPosRightElbow = new PVector();  // 2D point
@@ -191,6 +212,9 @@ void drawSkeleton(int userId) {
   fill(255, 255, 255, bodyAlpha);
   noStroke();
   ellipse(screenPosRightElbow.x, screenPosRightElbow.y, jointPosRightElbow.z/100.0, jointPosRightElbow.z/100.0);
+  
+  addForce(screenPosRightElbow.x, screenPosRightElbow.y, screenPosRightElbow.x-lastScreenPosRightElbow.x, screenPosRightElbow.y-lastScreenPosRightElbow.y, 264);
+  lastScreenPosRightElbow = screenPosRightElbow; // saving current value for next time (to remember the last point)
   
   // TORSO 
   PVector jointPosTorso = new PVector();  // 3D point
@@ -202,6 +226,9 @@ void drawSkeleton(int userId) {
   noStroke();
   ellipse(screenPosTorso.x, screenPosTorso.y, jointPosTorso.z/100.0, jointPosTorso.z/100.0);
   
+  addForce(screenPosTorso.x, screenPosTorso.y, screenPosTorso.x-lastScreenPosTorso.x, screenPosTorso.y-lastScreenPosTorso.y, 240);
+  lastScreenPosTorso = screenPosTorso; // saving current value for next time (to remember the last point)
+  
   // LEFT HIP 
   PVector jointPosLeftHip = new PVector();  // 3D point
   PVector screenPosLeftHip = new PVector();  // 2D point
@@ -211,6 +238,9 @@ void drawSkeleton(int userId) {
   fill(255, 255, 255, bodyAlpha);
   noStroke();
   ellipse(screenPosLeftHip.x, screenPosLeftHip.y, jointPosLeftHip.z/100.0, jointPosLeftHip.z/100.0);
+  
+  addForce(screenPosLeftHip.x, screenPosLeftHip.y, screenPosLeftHip.x-lastScreenPosLeftHip.x, screenPosLeftHip.y-lastScreenPosLeftHip.y, 96);
+  lastScreenPosLeftHip = screenPosLeftHip; // saving current value for next time (to remember the last point)
   
   // RIGHT HIP 
   PVector jointPosRightHip = new PVector();  // 3D point
@@ -222,6 +252,9 @@ void drawSkeleton(int userId) {
   noStroke();
   ellipse(screenPosRightHip.x, screenPosRightHip.y, jointPosRightHip.z/100.0, jointPosRightHip.z/100.0);
   
+  addForce(screenPosRightHip.x, screenPosRightHip.y, screenPosRightHip.x-lastScreenPosRightHip.x, screenPosRightHip.y-lastScreenPosRightHip.y, 120);
+  lastScreenPosRightHip = screenPosRightHip; // saving current value for next time (to remember the last point)
+  
   // LEFT KNEE 
   PVector jointPosLeftKnee = new PVector();  // 3D point
   PVector screenPosLeftKnee = new PVector();  // 2D point
@@ -231,6 +264,9 @@ void drawSkeleton(int userId) {
   fill(255, 255, 255, bodyAlpha);
   noStroke();
   ellipse(screenPosLeftKnee.x, screenPosLeftKnee.y, jointPosLeftKnee.z/100.0, jointPosLeftKnee.z/100.0);
+  
+  addForce(screenPosLeftKnee.x, screenPosLeftKnee.y, screenPosLeftKnee.x-lastScreenPosLeftKnee.x, screenPosLeftKnee.y-lastScreenPosLeftKnee.y, 144);
+  lastScreenPosLeftKnee = screenPosLeftKnee; // saving current value for next time (to remember the last point)
   
   // RIGHT KNEE 
   PVector jointPosRightKnee = new PVector();  // 3D point
@@ -242,6 +278,9 @@ void drawSkeleton(int userId) {
   noStroke();
   ellipse(screenPosRightKnee.x, screenPosRightKnee.y, jointPosRightKnee.z/100.0, jointPosRightKnee.z/100.0);
   
+  addForce(screenPosRightKnee.x, screenPosRightKnee.y, screenPosRightKnee.x-lastScreenPosRightKnee.x, screenPosRightKnee.y-lastScreenPosRightKnee.y, 168);
+  lastScreenPosRightKnee = screenPosRightKnee; // saving current value for next time (to remember the last point)
+  
   // LEFT FOOT 
   PVector jointPosLeftFoot = new PVector();  // 3D point
   PVector screenPosLeftFoot = new PVector();  // 2D point
@@ -252,6 +291,9 @@ void drawSkeleton(int userId) {
   noStroke();
   ellipse(screenPosLeftFoot.x, screenPosLeftFoot.y, jointPosLeftFoot.z/100.0, jointPosLeftFoot.z/100.0);
   
+  addForce(screenPosLeftFoot.x, screenPosLeftFoot.y, screenPosLeftFoot.x-lastScreenPosLeftFoot.x, screenPosLeftFoot.y-lastScreenPosLeftFoot.y, 192);
+  lastScreenPosLeftFoot = screenPosLeftFoot; // saving current value for next time (to remember the last point)
+  
   // RIGHT FOOT 
   PVector jointPosRightFoot = new PVector();  // 3D point
   PVector screenPosRightFoot = new PVector();  // 2D point
@@ -261,6 +303,9 @@ void drawSkeleton(int userId) {
   fill(255, 255, 255, bodyAlpha);
   noStroke();
   ellipse(screenPosRightFoot.x, screenPosRightFoot.y, jointPosRightFoot.z/100.0, jointPosRightFoot.z/100.0);
+  
+  addForce(screenPosRightFoot.x, screenPosRightFoot.y, screenPosRightFoot.x-lastScreenPosRightFoot.x, screenPosRightFoot.y-lastScreenPosRightFoot.y, 216);
+  lastScreenPosRightFoot = screenPosRightFoot; // saving current value for next time (to remember the last point)
   
 }
 
