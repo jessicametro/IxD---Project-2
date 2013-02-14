@@ -28,6 +28,9 @@ float bodyAlpha = 100; // originally 100
 
 float velScale = 0.0001;
 
+float kinectWidth, kinectHeight;
+float scaleWidth, scaleHeight;
+
 
 
 void setup() {
@@ -39,6 +42,11 @@ void setup() {
   // enable depthMap generation 
   context.enableDepth();
   context.setMirror(true);  // mirrors the image
+  kinectWidth = context.depthWidth();
+  kinectHeight = context.depthHeight();
+  scaleWidth = width/kinectWidth;
+  scaleHeight = height/kinectHeight;
+ 
  
   // enable skeleton generation for all joints
   context.enableUser(SimpleOpenNI.SKEL_PROFILE_ALL);
@@ -323,11 +331,11 @@ void drawSkeleton(int userId) {
 // d = derivative of the position
 // dx & dy = velocity
 void addForce(float x, float y, float dx, float dy, float hue) {
-  addForceAbs(x/float(width), y/float(height), dx/float(width), dy/float(height), hue);
+  addForceAbs(x/(kinectWidth), y/(kinectHeight), dx/(kinectWidth), dy/(kinectHeight), hue);
 }
 
 void addForceAbs(float x, float y, float dx, float dy, float hue) {
-    float speed = dx * dx  + dy * dy * float(height)/float(width);    // balance the x and y components of speed with the screen aspect ratio
+    float speed = dx * dx  + dy * dy * (kinectHeight)/(kinectWidth);    // balance the x and y components of speed with the screen aspect ratio
 
     if(speed > 0) {
         if(x<0) x = 0; 
