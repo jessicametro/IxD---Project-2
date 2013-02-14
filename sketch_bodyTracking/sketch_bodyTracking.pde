@@ -24,7 +24,7 @@ final float FLUID_WIDTH = 240;
 MSAFluidSolver2D fluidSolver;
 PImage imgFluid;
 
-float bodyAlpha = 0; // originally 100
+float bodyAlpha = 100; // originally 100
 
 float velScale = 0.0001;
 
