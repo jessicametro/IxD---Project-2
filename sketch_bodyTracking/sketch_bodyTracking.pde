@@ -136,15 +136,15 @@ void drawSkeleton(int userId) {
   };
 
   for (int i=0; i<jointID.length; i++) {
-    // LEFT HAND 
+
     PVector jointPos = new PVector();  // 3D point
     PVector screenPos = new PVector();  // 2D point
     context.getJointPositionSkeleton(userId, jointID[i], jointPos);
     context.convertRealWorldToProjective(jointPos, screenPos);
     //println(jointPos);
-    fill(255, 0, 0, bodyAlpha);
+    fill(255, 255, 255, bodyAlpha);
     noStroke();
-    ellipse(screenPos.x, screenPos.y, jointPos.z/100.0, jointPos.z/100.0);
+    ellipse(screenPos.x*scaleWidth, screenPos.y*scaleHeight, jointPos.z/100.0, jointPos.z/100.0);
 
     if (lastScreenPos[i] == null) {    // if there's nothing in there   
       lastScreenPos[i] = screenPos;    // use the initial position
