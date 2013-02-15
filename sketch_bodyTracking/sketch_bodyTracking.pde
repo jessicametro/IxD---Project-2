@@ -116,14 +116,24 @@ PVector lastScreenPosRightFoot = new PVector();
 // ARRAYS
 
 
-PVector[] lastScreenPos = new PVector[5];
+PVector[] lastScreenPos = new PVector[15];
 
 int[] jointColor = {
-  360,
   216,
-  144,
-  72,
-  288,
+  216,
+  216,
+  216,
+  216,
+  216,
+  216,
+  216,
+  216,
+  216,
+  216,
+  216,
+  216,
+  216,
+  216,
 };
 
 
@@ -138,6 +148,16 @@ void drawSkeleton(int userId) {
     SimpleOpenNI.SKEL_LEFT_HAND, 
     SimpleOpenNI.SKEL_RIGHT_HAND,
     SimpleOpenNI.SKEL_HEAD,
+    SimpleOpenNI.SKEL_NECK,
+    SimpleOpenNI.SKEL_LEFT_SHOULDER,
+    SimpleOpenNI.SKEL_RIGHT_SHOULDER,
+    SimpleOpenNI.SKEL_LEFT_ELBOW,
+    SimpleOpenNI.SKEL_RIGHT_ELBOW,
+    SimpleOpenNI.SKEL_TORSO,
+    SimpleOpenNI.SKEL_LEFT_HIP,
+    SimpleOpenNI.SKEL_RIGHT_HIP,
+    SimpleOpenNI.SKEL_LEFT_KNEE,
+    SimpleOpenNI.SKEL_RIGHT_KNEE,
     SimpleOpenNI.SKEL_LEFT_FOOT,
     SimpleOpenNI.SKEL_RIGHT_FOOT,
   };
@@ -398,10 +418,10 @@ void addForceAbs(float x, float y, float dx, float dy, float hue) {
 
         color drawColor;
 
-        colorMode(HSB, 360, 1, 1);
-        hue = (hue + frameCount/30) % 360;
+        colorMode(HSB, 360, 1, 0.05);
+        hue = (hue + frameCount/60) % 360;
         //float hue = ((x + y) * 180 + frameCount) % 360;
-        drawColor = color(hue, 1, 1);
+        drawColor = color(hue, 1, 0.1);
         colorMode(RGB, 1);  
 
         fluidSolver.rOld[index]  += red(drawColor) * colorMult;
