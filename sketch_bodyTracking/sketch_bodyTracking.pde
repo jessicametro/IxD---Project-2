@@ -24,7 +24,7 @@ final float FLUID_WIDTH = 240;
 MSAFluidSolver2D fluidSolver;
 PImage imgFluid;
 
-float bodyAlpha = 100; // originally 100
+float bodyAlpha = 0; // originally 100
 
 float velScale = 0.0001;
 
@@ -116,11 +116,14 @@ PVector lastScreenPosRightFoot = new PVector();
 // arrays
 
 
-PVector[] lastScreenPos = new PVector[2];
+PVector[] lastScreenPos = new PVector[5];
 
 int[] jointColor = {
-  0,
-  124,
+  360,
+  216,
+  144,
+  72,
+  288,
 };
 
 
@@ -133,6 +136,9 @@ void drawSkeleton(int userId) {
   int[] jointID = {
     SimpleOpenNI.SKEL_LEFT_HAND, 
     SimpleOpenNI.SKEL_RIGHT_HAND,
+    SimpleOpenNI.SKEL_HEAD,
+    SimpleOpenNI.SKEL_LEFT_FOOT,
+    SimpleOpenNI.SKEL_RIGHT_FOOT,
   };
 
   for (int i=0; i<jointID.length; i++) {
