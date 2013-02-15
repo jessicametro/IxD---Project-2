@@ -19,7 +19,7 @@ import msafluid.*;
 
 SimpleOpenNI context;
 boolean autoCalib=true;
-final float FLUID_WIDTH = 240;
+final float FLUID_WIDTH = 120;
 
 MSAFluidSolver2D fluidSolver;
 PImage imgFluid;
@@ -113,7 +113,7 @@ PVector lastScreenPosRightFoot = new PVector();
 
 
 
-// arrays
+// ARRAYS
 
 
 PVector[] lastScreenPos = new PVector[5];
@@ -133,6 +133,7 @@ void drawSkeleton(int userId) {
   // to get the 3d joint data
   // from https://github.com/acm-uiuc/FallingBlocks/blob/master/PhsyicsKinect/PhsyicsKinect.pde
   
+  // this array goes inside for some reason....
   int[] jointID = {
     SimpleOpenNI.SKEL_LEFT_HAND, 
     SimpleOpenNI.SKEL_RIGHT_HAND,
