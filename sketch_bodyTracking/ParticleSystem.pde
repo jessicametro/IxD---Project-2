@@ -31,7 +31,7 @@
 
 class ParticleSystem {
 
-    final static int maxParticles = 5000;
+    final static int maxParticles = 10000;
     int curIndex = 0;
 
     Particle[] particles;
@@ -76,12 +76,12 @@ class ParticleSystem {
 //        else {
             //gl.glBegin(GL.GL_LINES);               // start drawing points
             for(int i=0; i<maxParticles; i++) {
-                if(particles[i].alpha > 0) {
+                //if(particles[i].alpha > 0) {
                     rectMode(RADIUS);
                     noStroke();
                     particles[i].update();
                     particles[i].draw();    // use oldschool renderng
-                }
+                // }
             }
             //gl.glEnd();
 //        }

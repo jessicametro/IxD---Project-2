@@ -32,12 +32,14 @@
 class Particle {
     final static float MOMENTUM = 0.5;
     final static float FLUID_FORCE = 0.6;
-
+    
     float x, y;
     float vx, vy;
     float radius;       // particle's size
-    float alpha;
+    //float alpha;
     float mass;
+    float age;
+    float maxLife;
 
     void init(float x, float y) {
         this.x = x;
@@ -45,14 +47,18 @@ class Particle {
         vx = 0;
         vy = 0;
         radius = 5;
-        alpha  = random(0.3, 1);
-        mass = random(0.1, 1);
+        //alpha  = random(0.3, 1);
+        mass = random(0.001, 0.01);
+        age = 0;
+        maxLife = 20;
     }
 
 
     void update() {
         // only update if particle is visible
-        if(alpha == 0) return;
+        //if(alpha == 0) return;
+        if(age >= maxLife) return;
+        age += 1; // add one to the age every time until it gets to 20, then die
 
         // read fluid info and add to velocity
         int fluidIndex = fluidSolver.getIndexForNormalizedPosition(x / float(width), y / float(height) );
@@ -89,14 +95,19 @@ class Particle {
         }
 
         // fade out a bit (and kill if alpha == 0);
-        alpha *= 0.998;
-        if(alpha < 0.01) alpha = 0;
+        //alpha *= 0.998;
+        //if(alpha < 0.01) alpha = 0;
+
 
     }
 
 
     void draw() {
-      fill(255,255,255,alpha);
+      if (age >= maxLife) {
+        return;  // don't draw it
+      }
+      //fill(255,255,255,alpha);
+      fill(255, 255, 255, (1-age/maxLife)); // make it fade out as it ages
       rect(x,y,radius,radius);
     }
 

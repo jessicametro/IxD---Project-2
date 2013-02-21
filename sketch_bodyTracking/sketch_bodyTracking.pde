@@ -43,6 +43,7 @@ void setup() {
   
   // enable depthMap generation 
   context.enableDepth();
+  context.enableScene();
   context.setMirror(true);  // mirrors the image
   kinectWidth = context.depthWidth();
   kinectHeight = context.depthHeight();
@@ -94,10 +95,32 @@ void draw() {
     if(context.isTrackingSkeleton(userList[i]))
       drawSkeleton(userList[i]);
   } 
-  // draw particles
-  particles.updateAndDraw();
   
+  // draw particles
+  createParticles();
+  particles.updateAndDraw();
 }
+
+
+
+// look through the scene to create particles
+void createParticles() {
+  int[] map = context.sceneMap();
+  int[] depth = context.depthMap();
+  if (frameCount % 1 == 0) {
+    for (int i=0; i<500; i++) {
+      int x = int(random(0, kinectWidth));
+      int y = int(random(0, kinectHeight));
+      int loc = int(x+y*kinectWidth);
+      if (map[loc] != 0) {
+        particles.addParticle(x/kinectWidth*width, y/kinectHeight*height);
+        //addforce
+      }
+    }
+  }
+
+}
+
 
 
 
