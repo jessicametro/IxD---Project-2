@@ -31,6 +31,8 @@ float velScale = 0.0001;
 float kinectWidth, kinectHeight;
 float scaleWidth, scaleHeight;
 
+ParticleSystem particles;
+
 
 
 void setup() {
@@ -58,6 +60,10 @@ void setup() {
 
   // create image to hold fluid picture
   imgFluid = createImage(fluidSolver.getWidth(), fluidSolver.getHeight(), RGB);
+  
+  // create particles
+  particles = new ParticleSystem();
+  
 }
 
 
@@ -87,7 +93,10 @@ void draw() {
   {
     if(context.isTrackingSkeleton(userList[i]))
       drawSkeleton(userList[i]);
-  }   
+  } 
+  // draw particles
+  particles.updateAndDraw();
+  
 }
 
 
@@ -430,7 +439,9 @@ void addForceAbs(float x, float y, float dx, float dy, float hue) {
 
         fluidSolver.uOld[index] += dx * velocityMult;
         fluidSolver.vOld[index] += dy * velocityMult;
-    }
+        
+        particles.addParticle(x*width, y*height);
+    }  
 }
 
 
