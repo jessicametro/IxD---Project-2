@@ -71,6 +71,9 @@ void setup() {
 
 
 void draw() {
+  fill(0, 10);
+  rect(0, 0, width, height);
+  
   // update the cam
   context.update();
   
@@ -81,12 +84,12 @@ void draw() {
   //image(context.depthImage(),0,0);
   
    // draw the fluid
-   for(int i=0; i<fluidSolver.getNumCells(); i++) {
-       int d = 2;
-       imgFluid.pixels[i] = color(fluidSolver.r[i] * d, fluidSolver.g[i] * d, fluidSolver.b[i] * d);
-   }  
-   imgFluid.updatePixels();//  fastblur(imgFluid, 2);
-   image(imgFluid, 0, 0, width, height);
+//   for(int i=0; i<fluidSolver.getNumCells(); i++) {
+//       int d = 2;
+//       imgFluid.pixels[i] = color(fluidSolver.r[i] * d, fluidSolver.g[i] * d, fluidSolver.b[i] * d);
+//   }  
+//   imgFluid.updatePixels();//  fastblur(imgFluid, 2);
+//   image(imgFluid, 0, 0, width, height);
 
   // draw the skeleton if it's available
   int[] userList = context.getUsers();

@@ -51,6 +51,10 @@ class Particle {
         mass = random(0.001, 0.01);
         age = 0;
         maxLife = 20;
+        if (random(0, 20) <= 1) {
+          maxLife = 200;
+          mass = 0.4;
+        }
     }
 
 
