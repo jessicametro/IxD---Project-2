@@ -111,7 +111,7 @@ void createParticles() {
   int[] map = context.sceneMap();
   int[] depth = context.depthMap();
   if (frameCount % 1 == 0) {
-    for (int i=0; i<500; i++) {
+    for (int i=0; i<1000; i++) {
       int x = int(random(0, kinectWidth));
       int y = int(random(0, kinectHeight));
       int loc = int(x+y*kinectWidth);
@@ -466,7 +466,7 @@ void addForceAbs(float x, float y, float dx, float dy, float hue) {
         fluidSolver.uOld[index] += dx * velocityMult;
         fluidSolver.vOld[index] += dy * velocityMult;
         
-        particles.addParticle(x*width, y*height);
+        //particles.addParticle(x*width, y*height);
     }  
 }
 

@@ -31,7 +31,7 @@
 
 class ParticleSystem {
 
-    final static int maxParticles = 10000;
+    final static int maxParticles = 20000;
     int curIndex = 0;
 
     Particle[] particles;

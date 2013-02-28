@@ -112,7 +112,7 @@ class Particle {
       }
       //fill(255,255,255,alpha);
       fill(255, 255, 255, (1-age/maxLife)); // make it fade out as it ages
-      rect(x,y,radius,radius);
+      ellipse(x,y,radius,radius);
     }
 
     
