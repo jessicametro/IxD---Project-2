@@ -41,12 +41,12 @@ class Particle {
     float age;
     float maxLife;
 
-    void init(float x, float y) {
+    void init(float x, float y, float radius) {
         this.x = x;
         this.y = y;
         vx = 0;
         vy = 0;
-        radius = 5;
+        this.radius = radius; // originally 5
         //alpha  = random(0.3, 1);
         mass = random(0.001, 0.01);
         age = 0;

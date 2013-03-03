@@ -116,7 +116,8 @@ void createParticles() {
       int y = int(random(0, kinectHeight));
       int loc = int(x+y*kinectWidth);
       if (map[loc] != 0) {
-        particles.addParticle(x/kinectWidth*width, y/kinectHeight*height);
+        float radius = 5-(float(depth[loc])/1000);
+        particles.addParticle(x/kinectWidth*width, y/kinectHeight*height, radius);
         //addforce
       }
     }

@@ -96,8 +96,8 @@ class ParticleSystem {
 //    }
 
 
-    void addParticle(float x, float y) {
-        particles[curIndex].init(x, y);
+    void addParticle(float x, float y, float radius) {
+        particles[curIndex].init(x, y, radius);
         curIndex++;
         if(curIndex >= maxParticles) curIndex = 0;
     }
