@@ -57,7 +57,7 @@ void setup() {
   
   // create fluid and set options
   fluidSolver = new MSAFluidSolver2D((int)(FLUID_WIDTH), (int)(FLUID_WIDTH * height/width));
-    fluidSolver.enableRGB(true).setFadeSpeed(0.003).setDeltaT(0.5).setVisc(0.0001);
+    fluidSolver.enableRGB(true).setFadeSpeed(0.02).setDeltaT(0.5).setVisc(0.0001);
 
   // create image to hold fluid picture
   imgFluid = createImage(fluidSolver.getWidth(), fluidSolver.getHeight(), RGB);
@@ -90,6 +90,8 @@ void draw() {
    }  
    imgFluid.updatePixels();//  fastblur(imgFluid, 2);
    image(imgFluid, 0, 0, width, height);
+   fill(0, 0.5);
+   rect(0, 0, width, height);
 
   // draw the skeleton if it's available
   int[] userList = context.getUsers();
@@ -118,6 +120,7 @@ void createParticles() {
       if (map[loc] != 0) {
         float radius = ((5-(float(depth[loc])/1000))*2);
         particles.addParticle(x/kinectWidth*width, y/kinectHeight*height, radius);
+        addColor(x/kinectWidth, y/kinectHeight, 0);
         //addforce
       }
     }
@@ -181,21 +184,21 @@ void drawSkeleton(int userId) {
   
   // this array goes inside for some reason....
   int[] jointID = {
-//    SimpleOpenNI.SKEL_LEFT_HAND, 
-//    SimpleOpenNI.SKEL_RIGHT_HAND,
-//    SimpleOpenNI.SKEL_HEAD,
-//    SimpleOpenNI.SKEL_NECK,
-//    SimpleOpenNI.SKEL_LEFT_SHOULDER,
-//    SimpleOpenNI.SKEL_RIGHT_SHOULDER,
-//    SimpleOpenNI.SKEL_LEFT_ELBOW,
-//    SimpleOpenNI.SKEL_RIGHT_ELBOW,
+    SimpleOpenNI.SKEL_LEFT_HAND, 
+    SimpleOpenNI.SKEL_RIGHT_HAND,
+    SimpleOpenNI.SKEL_HEAD,
+    SimpleOpenNI.SKEL_NECK,
+    SimpleOpenNI.SKEL_LEFT_SHOULDER,
+    SimpleOpenNI.SKEL_RIGHT_SHOULDER,
+    SimpleOpenNI.SKEL_LEFT_ELBOW,
+    SimpleOpenNI.SKEL_RIGHT_ELBOW,
     SimpleOpenNI.SKEL_TORSO,
-//    SimpleOpenNI.SKEL_LEFT_HIP,
-//    SimpleOpenNI.SKEL_RIGHT_HIP,
-//    SimpleOpenNI.SKEL_LEFT_KNEE,
-//    SimpleOpenNI.SKEL_RIGHT_KNEE,
-//    SimpleOpenNI.SKEL_LEFT_FOOT,
-//    SimpleOpenNI.SKEL_RIGHT_FOOT,
+    SimpleOpenNI.SKEL_LEFT_HIP,
+    SimpleOpenNI.SKEL_RIGHT_HIP,
+    SimpleOpenNI.SKEL_LEFT_KNEE,
+    SimpleOpenNI.SKEL_RIGHT_KNEE,
+    SimpleOpenNI.SKEL_LEFT_FOOT,
+    SimpleOpenNI.SKEL_RIGHT_FOOT,
   };
 
   for (int i=0; i<jointID.length; i++) {
@@ -447,22 +450,9 @@ void addForceAbs(float x, float y, float dx, float dy, float hue) {
         if(y<0) y = 0; 
         else if(y>1) y = 1;
 
-        float colorMult = 5;
         float velocityMult = 30.0f;
 
         int index = fluidSolver.getIndexForNormalizedPosition(x, y);
-
-        color drawColor;
-
-        colorMode(HSB, 360, 1, 0.05);
-        hue = (hue + frameCount/60) % 360;
-        //float hue = ((x + y) * 180 + frameCount) % 360;
-        drawColor = color(hue, 1, 0.1);
-        colorMode(RGB, 1);  
-
-        fluidSolver.rOld[index]  += red(drawColor) * colorMult;
-        fluidSolver.gOld[index]  += green(drawColor) * colorMult;
-        fluidSolver.bOld[index]  += blue(drawColor) * colorMult;
 
         fluidSolver.uOld[index] += dx * velocityMult;
         fluidSolver.vOld[index] += dy * velocityMult;
@@ -471,6 +461,29 @@ void addForceAbs(float x, float y, float dx, float dy, float hue) {
     }  
 }
 
+
+void addColor(float x, float y, float hue) {
+  if(x<0) x = 0; 
+  else if(x>1) x = 1;
+  if(y<0) y = 0; 
+  else if(y>1) y = 1;
+
+  float colorMult = 1;
+
+  int index = fluidSolver.getIndexForNormalizedPosition(x, y);
+
+  color drawColor;
+
+  colorMode(HSB, 360, 1, 0.05);
+  //hue = (hue + frameCount/60) % 360;
+  //float hue = ((x + y) * 180 + frameCount) % 360;
+  drawColor = color(hue, 1, 0.1);
+  colorMode(RGB, 1);  
+
+  fluidSolver.rOld[index]  += red(drawColor) * colorMult;
+  fluidSolver.gOld[index]  += green(drawColor) * colorMult;
+  fluidSolver.bOld[index]  += blue(drawColor) * colorMult;
+}
 
 
 
