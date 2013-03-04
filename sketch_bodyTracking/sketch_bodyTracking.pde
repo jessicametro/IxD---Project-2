@@ -120,7 +120,13 @@ void createParticles() {
       if (map[loc] != 0) {
         float radius = ((5-(float(depth[loc])/1000))*2);
         particles.addParticle(x/kinectWidth*width, y/kinectHeight*height, radius);
-        addColor(x/kinectWidth, y/kinectHeight, 0);
+        
+        // read fluid info and add to velocity
+        int fluidIndex = fluidSolver.getIndexForNormalizedPosition(x/kinectWidth, y/kinectHeight);
+        float fluidVX = fluidSolver.u[fluidIndex];
+        float fluidVY = fluidSolver.v[fluidIndex];
+        
+        addColor(x/kinectWidth, y/kinectHeight, lerp(250, -20, ((dist(0,0,fluidVX, fluidVY)*20000)/360)));
         //addforce
       }
     }
