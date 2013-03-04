@@ -112,6 +112,7 @@ class Particle {
       }
       //fill(255,255,255,alpha);
       //fill(255, 255, 255, (1-age/maxLife)); // make it fade out as it ages
+      strokeWeight(radius/10);
       stroke(255, 255, 255, (1-age/maxLife));
       noFill();
       ellipse(x,y,radius,radius);
