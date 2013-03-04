@@ -84,12 +84,12 @@ void draw() {
   //image(context.depthImage(),0,0);
   
    // draw the fluid
-//   for(int i=0; i<fluidSolver.getNumCells(); i++) {
-//       int d = 2;
-//       imgFluid.pixels[i] = color(fluidSolver.r[i] * d, fluidSolver.g[i] * d, fluidSolver.b[i] * d);
-//   }  
-//   imgFluid.updatePixels();//  fastblur(imgFluid, 2);
-//   image(imgFluid, 0, 0, width, height);
+   for(int i=0; i<fluidSolver.getNumCells(); i++) {
+       int d = 2;
+       imgFluid.pixels[i] = color(fluidSolver.r[i] * d, fluidSolver.g[i] * d, fluidSolver.b[i] * d);
+   }  
+   imgFluid.updatePixels();//  fastblur(imgFluid, 2);
+   image(imgFluid, 0, 0, width, height);
 
   // draw the skeleton if it's available
   int[] userList = context.getUsers();
@@ -181,21 +181,21 @@ void drawSkeleton(int userId) {
   
   // this array goes inside for some reason....
   int[] jointID = {
-    SimpleOpenNI.SKEL_LEFT_HAND, 
-    SimpleOpenNI.SKEL_RIGHT_HAND,
-    SimpleOpenNI.SKEL_HEAD,
-    SimpleOpenNI.SKEL_NECK,
-    SimpleOpenNI.SKEL_LEFT_SHOULDER,
-    SimpleOpenNI.SKEL_RIGHT_SHOULDER,
-    SimpleOpenNI.SKEL_LEFT_ELBOW,
-    SimpleOpenNI.SKEL_RIGHT_ELBOW,
+//    SimpleOpenNI.SKEL_LEFT_HAND, 
+//    SimpleOpenNI.SKEL_RIGHT_HAND,
+//    SimpleOpenNI.SKEL_HEAD,
+//    SimpleOpenNI.SKEL_NECK,
+//    SimpleOpenNI.SKEL_LEFT_SHOULDER,
+//    SimpleOpenNI.SKEL_RIGHT_SHOULDER,
+//    SimpleOpenNI.SKEL_LEFT_ELBOW,
+//    SimpleOpenNI.SKEL_RIGHT_ELBOW,
     SimpleOpenNI.SKEL_TORSO,
-    SimpleOpenNI.SKEL_LEFT_HIP,
-    SimpleOpenNI.SKEL_RIGHT_HIP,
-    SimpleOpenNI.SKEL_LEFT_KNEE,
-    SimpleOpenNI.SKEL_RIGHT_KNEE,
-    SimpleOpenNI.SKEL_LEFT_FOOT,
-    SimpleOpenNI.SKEL_RIGHT_FOOT,
+//    SimpleOpenNI.SKEL_LEFT_HIP,
+//    SimpleOpenNI.SKEL_RIGHT_HIP,
+//    SimpleOpenNI.SKEL_LEFT_KNEE,
+//    SimpleOpenNI.SKEL_RIGHT_KNEE,
+//    SimpleOpenNI.SKEL_LEFT_FOOT,
+//    SimpleOpenNI.SKEL_RIGHT_FOOT,
   };
 
   for (int i=0; i<jointID.length; i++) {
