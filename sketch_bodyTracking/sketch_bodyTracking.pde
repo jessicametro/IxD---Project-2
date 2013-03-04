@@ -205,8 +205,10 @@ void drawSkeleton(int userId) {
     context.getJointPositionSkeleton(userId, jointID[i], jointPos);
     context.convertRealWorldToProjective(jointPos, screenPos);
     //println(jointPos);
-    fill(255, 255, 255, bodyAlpha);
-    noStroke();
+    //fill(255, 255, 255, bodyAlpha);
+    //noStroke();
+    stroke(255, 255, 255, bodyAlpha);
+    noFill();
     ellipse(screenPos.x*scaleWidth, screenPos.y*scaleHeight, jointPos.z/100.0, jointPos.z/100.0);
 
     if (lastScreenPos[i] == null) {    // if there's nothing in there   

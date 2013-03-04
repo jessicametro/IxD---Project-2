@@ -111,7 +111,9 @@ class Particle {
         return;  // don't draw it
       }
       //fill(255,255,255,alpha);
-      fill(255, 255, 255, (1-age/maxLife)); // make it fade out as it ages
+      //fill(255, 255, 255, (1-age/maxLife)); // make it fade out as it ages
+      stroke(255, 255, 255, (1-age/maxLife));
+      noFill();
       ellipse(x,y,radius,radius);
     }
 
