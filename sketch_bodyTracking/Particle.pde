@@ -27,103 +27,99 @@
  * OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
  * OF THE POSSIBILITY OF SUCH DAMAGE. 
  *
- * ***********************************************************************/ 
+ * ***********************************************************************/
 
 class Particle {
-    final static float MOMENTUM = 0.5;
-    final static float FLUID_FORCE = 0.6;
-    
-    float x, y;
-    float vx, vy;
-    float radius;       // particle's size
-    //float alpha;
-    float mass;
-    float age;
-    float maxLife;
+  final static float MOMENTUM = 0.5;
+  final static float FLUID_FORCE = 0.6;
 
-    void init(float x, float y, float radius) {
-        this.x = x;
-        this.y = y;
-        vx = 0;
-        vy = 0;
-        this.radius = radius; // originally 5
-        //alpha  = random(0.3, 1);
-        mass = random(0.001, 0.01);
-        age = 0;
-        maxLife = 20;
-        if (random(0, 20) <= 1) {
-          maxLife = 200;
-          mass = 0.4;
-        }
+  float x, y;
+  float vx, vy;
+  float radius;       // particle's size
+  //float alpha;
+  float mass;
+  float age;
+  float maxLife;
+
+  void init(float x, float y, float radius) {
+    this.x = x;
+    this.y = y;
+    vx = 0;
+    vy = 0;
+    this.radius = radius; // originally 5
+    //alpha  = random(0.3, 1);
+    mass = random(0.001, 0.01);
+    age = 0;
+    maxLife = 20;
+    if (random(0, 20) <= 1) {
+      maxLife = 200;
+      mass = 0.4;
+    }
+  }
+
+
+  void update() {
+    // only update if particle is visible
+    //if(alpha == 0) return;
+    if (age >= maxLife) return;
+    age += 1; // add one to the age every time until it gets to 20, then die
+
+    // read fluid info and add to velocity
+    int fluidIndex = fluidSolver.getIndexForNormalizedPosition(x / float(width), y / float(height) );
+    vx = fluidSolver.u[fluidIndex] * width * mass * FLUID_FORCE + vx * MOMENTUM;
+    vy = fluidSolver.v[fluidIndex] * height * mass * FLUID_FORCE + vy * MOMENTUM;
+
+    // update position
+    x += vx;
+    y += vy;
+
+    //        // bounce of edges
+    //        if(x<0) {
+    //            x = 0;
+    //            vx *= -1;
+    //        }
+    //        else if(x > width) {
+    //            x = width;
+    //            vx *= -1;
+    //        }
+    //
+    //        if(y<0) {
+    //            y = 0;
+    //            vy *= -1;
+    //        }
+    //        else if(y > height) {
+    //            y = height;
+    //            vy *= -1;
+    //        }
+
+    // hackish way to make particles glitter when the slow down a lot
+    if (vx * vx + vy * vy < 1) {
+      vx = random(-1, 1);
+      vy = random(-1, 1);
     }
 
-
-    void update() {
-        // only update if particle is visible
-        //if(alpha == 0) return;
-        if(age >= maxLife) return;
-        age += 1; // add one to the age every time until it gets to 20, then die
-
-        // read fluid info and add to velocity
-        int fluidIndex = fluidSolver.getIndexForNormalizedPosition(x / float(width), y / float(height) );
-        vx = fluidSolver.u[fluidIndex] * width * mass * FLUID_FORCE + vx * MOMENTUM;
-        vy = fluidSolver.v[fluidIndex] * height * mass * FLUID_FORCE + vy * MOMENTUM;
-
-        // update position
-        x += vx;
-        y += vy;
-
-//        // bounce of edges
-//        if(x<0) {
-//            x = 0;
-//            vx *= -1;
-//        }
-//        else if(x > width) {
-//            x = width;
-//            vx *= -1;
-//        }
-//
-//        if(y<0) {
-//            y = 0;
-//            vy *= -1;
-//        }
-//        else if(y > height) {
-//            y = height;
-//            vy *= -1;
-//        }
-
-        // hackish way to make particles glitter when the slow down a lot
-        if(vx * vx + vy * vy < 1) {
-            vx = random(-1, 1);
-            vy = random(-1, 1);
-        }
-
-        // fade out a bit (and kill if alpha == 0);
-        //alpha *= 0.998;
-        //if(alpha < 0.01) alpha = 0;
+    // fade out a bit (and kill if alpha == 0);
+    //alpha *= 0.998;
+    //if(alpha < 0.01) alpha = 0;
+  }
 
 
+  void draw() {
+    if (age >= maxLife) {
+      return;  // don't draw it
     }
-
-
-    void draw() {
-      if (age >= maxLife) {
-        return;  // don't draw it
-      }
-      //fill(255,255,255,alpha);
-      //fill(255, 255, 255, (1-age/maxLife)); // make it fade out as it ages
-      strokeWeight(radius/10);
-      stroke(255, 255, 255, (1-age/maxLife));
-      noFill();
-      ellipse(x,y,radius,radius);
-    }
-
-    
-
-
-
+    //fill(255,255,255,alpha);
+    //fill(255, 255, 255, (1-age/maxLife)); // make it fade out as it ages
+    strokeWeight(radius/10);
+    stroke(255, 255, 255, (1-age/maxLife));
+    pushStyle();
+      colorMode(HSB, 360, 100, 100);
+      float hue = lerp(265, -10, ((dist(0,0,vx,vy))/20));
+      fill(hue, 65, 75, (1-age/maxLife));
+      ellipse(x, y, radius, radius);
+    popStyle();
+  }
 }
-
 
 
 
