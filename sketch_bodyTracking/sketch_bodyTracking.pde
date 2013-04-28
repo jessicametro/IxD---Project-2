@@ -32,6 +32,7 @@ float kinectWidth, kinectHeight;
 float scaleWidth, scaleHeight;
 
 ParticleSystem particles;
+HashMap<Integer, User> userMap = new HashMap<Integer, User>();
 
 
 
@@ -95,10 +96,15 @@ void draw() {
 
   // draw the skeleton if it's available
   int[] userList = context.getUsers();
-  for(int i=0;i<userList.length;i++)
-  {
-    if(context.isTrackingSkeleton(userList[i]))
+  for(int i=0;i<userList.length;i++) {
+    if(context.isTrackingSkeleton(userList[i])) {
+      
+      //this shouldn't ever happen, but if for some reason we don't have a user object for this user, make one.
+      if (userMap.containsKey(userList[i]) == false) {
+        createUser(userList[i]);
+      }
       drawSkeleton(userList[i]);
+    }
   } 
   
   // draw particles
@@ -135,33 +141,20 @@ void createParticles() {
 }
 
 
+class User {
+  // ARRAYS
+  PVector[] lastScreenPos = new PVector[15];
+}
 
+void createUser(int userId) {
+  User newuser = new User();
+  userMap.put(userId, newuser);
+}
 
+void removeUser(int userId) {
+  userMap.remove(userId);
+}
 
-// remember the last 2D point
-PVector lastScreenPosLeftHand = new PVector(); 
-PVector lastScreenPosRightHand = new PVector(); 
-PVector lastScreenPosHead = new PVector();
-PVector lastScreenPosNeck = new PVector();
-PVector lastScreenPosLeftShoulder = new PVector();
-PVector lastScreenPosRightShoulder = new PVector();
-PVector lastScreenPosLeftElbow = new PVector();
-PVector lastScreenPosRightElbow = new PVector();
-PVector lastScreenPosTorso = new PVector();
-PVector lastScreenPosLeftHip = new PVector();
-PVector lastScreenPosRightHip = new PVector();
-PVector lastScreenPosLeftKnee = new PVector();
-PVector lastScreenPosRightKnee = new PVector();
-PVector lastScreenPosLeftFoot = new PVector();
-PVector lastScreenPosRightFoot = new PVector();
-
-
-
-
-// ARRAYS
-
-
-PVector[] lastScreenPos = new PVector[15];
 
 int[] jointColor = {
   216,
@@ -184,7 +177,9 @@ int[] jointColor = {
 
 // draw the skeleton with the selected joints
 void drawSkeleton(int userId) {
-
+  User user = userMap.get(userId); 
+  if (user == null) return; //this *should* never happen, but JUST in case.
+  
   // to get the 3d joint data
   // from https://github.com/acm-uiuc/FallingBlocks/blob/master/PhsyicsKinect/PhsyicsKinect.pde
   
@@ -218,12 +213,12 @@ void drawSkeleton(int userId) {
     noStroke();
     ellipse(screenPos.x*scaleWidth, screenPos.y*scaleHeight, jointPos.z/100.0, jointPos.z/100.0);
 
-    if (lastScreenPos[i] == null) {    // if there's nothing in there   
-      lastScreenPos[i] = screenPos;    // use the initial position
+    if (user.lastScreenPos[i] == null) {    // if there's nothing in there   
+      user.lastScreenPos[i] = screenPos;    // use the initial position
     }
     
-    addForce(screenPos.x, screenPos.y, screenPos.x-lastScreenPos[i].x, screenPos.y-lastScreenPos[i].y, jointColor[i]);
-    lastScreenPos[i] = screenPos; // saving current value for next time (to remember the last point)
+    addForce(screenPos.x, screenPos.y, screenPos.x-user.lastScreenPos[i].x, screenPos.y-user.lastScreenPos[i].y, jointColor[i]);
+    user.lastScreenPos[i] = screenPos; // saving current value for next time (to remember the last point)
   }
   
 }
@@ -297,16 +292,20 @@ void onNewUser(int userId)
     context.requestCalibrationSkeleton(userId,true);
   else    
     context.startPoseDetection("Psi",userId);
+  
+  createUser(userId);
 }
 
 void onLostUser(int userId)
 {
   println("onLostUser - userId: " + userId);
+  removeUser(userId);
 }
 
 void onExitUser(int userId)
 {
   println("onExitUser - userId: " + userId);
+  removeUser(userId);
 }
 
 void onReEnterUser(int userId)
